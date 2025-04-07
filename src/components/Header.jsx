@@ -3,10 +3,10 @@ export const Header = ({scroll}) => {
     <nav className="fixed bg-[var(--background-color)] w-screen z-900 justify-center transition-color 
       duration-300 shadow-[0_10px_20px_rgba(0,0,0,.5)]">
       <div
-        className={`flex text-[.8rem] w-85/100 m-auto justify-between transition-all duration-300
+        className={`flex text-[1.5rem] w-85/100 m-auto justify-between transition-all duration-300
         ${scroll > 10
-          ? "py-[5px]"
-          : "py-2"
+          ? "py-3"
+          : "py-4"
         }
         `}
       >

@@ -16,10 +16,10 @@ export const Projects = () => {
   return(
     <section
       id="projects"
-      className="h-screen w-full pt-10"
+      className="h-screen w-full p-10"
     >
-      <h1 className="text-center text-2xl">Projects</h1>
-      <div className="grid grid-rows-2 grid-cols-2 gap-[40px] p-[30px]">
+      <h1 className="text-center text-[3rem]">Projects</h1>
+      <div className="grid grid-rows-2 grid-cols-2 gap-[70px] p-[30px]">
         {Array(4).fill(null).map((_, index) => (
           <div>
             <Project 

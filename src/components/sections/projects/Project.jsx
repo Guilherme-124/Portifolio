@@ -21,11 +21,11 @@ export const Project = ({index, setOpenMore, focus, setFocus}) => {
       }
     };
 
-    const handleTimer = () => clearTimeout(timer);
+    const handleUnfocus = () => clearTimeout(timer);
 
     const projectEvents = [
       {type: "mouseenter", handler: handleFocus},
-      {type: "mouseleave", handler: handleTimer},
+      {type: "mouseleave", handler: handleUnfocus},
       {type: "click", handler: handleFocus},
     ];
     projectEvents.forEach(({type, handler}) => {project.addEventListener(type, handler)}); 
@@ -52,12 +52,12 @@ export const Project = ({index, setOpenMore, focus, setFocus}) => {
         alt="Some Project" 
       />
       <div 
-        className={`absolute top-100 right-0 w-full h-0 bg-opacity- z-600
-        px-1 pb-1 transition-all duration-200 text-[2vw]
-        backdrop-blur-[1px] backdrop-brightness-70
+        className={`absolute right-0 w-full h-[40%] z-600
+        px-1 pb-1 transition-all duration-200 text-[1.5rem]
+        backdrop-blur-[1px] backdrop-brightness-70 visibility-hidden opacity-0
         ${focus
-          ? "h-[40%] top-[60%]"
-          : ""
+          ? "visibility-visible opacity-100 top-[60%]"
+          : " top-[100%]"
         }
         `}  
       >
