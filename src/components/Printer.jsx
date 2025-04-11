@@ -25,6 +25,8 @@ and printing the text in the description area */
 
   function saveWord(word, type) {
     savedWords.set(word, (type == "func" ? "green" : "purple"));
+    /* this function is not going to be here forever i`m just keeping it "simpler" for now 
+    so i can finish the formatText function */
   };
 
   typeColor(Bool, "purple");
