@@ -10,50 +10,38 @@ and printing the text in the description area */
   const world = ["window", "document"];
   const numbers = ["Infinity", "NaN"];
   const Adresses = ["null", "undefined"];
-  const KeyWord = [
-    "if",
-    "else",
-    "return",
-    "function",
-    "class",
-    "let",
-    "var",
-    "const",
-  ];
-  const Operators = [
-    "+",
-    "-",
-    "*",
-    "/",
-    "&&",
-    "||",
-    "=",
-    "==",
-    "===",
-    "!",
-    "?",
-    "<",
-    ">",
-    "?",
-  ];
+  const KeyWord = [ "if", "else", "return", "function", "class", "let",
+    "var", "const", ];
+  const Operators = [ "+", "-", "*", "/", "&&", "||", "=",
+    "==", "===", "!", "?", "<", ">", "?", ];
+
+  let savedWords = new Map();
+  const types = new Map();
+  const typeColor = (list, color) => {
+    list.forEach(word => {
+      types.set(word, color)
+    });
+  };
+
+  function saveWord(word, type) {
+    savedWords.set(word, (type == "func" ? "green" : "purple"));
+  };
+
+  typeColor(Bool, "purple");
+  typeColor(world, "purple");
+  typeColor(numbers, "purple");
+  typeColor(Adresses, "purple");
+  typeColor(KeyWord, "pink");
+  typeColor(Operators, "pink");
 
   const lines = text.split("\n");
 
   function setType(word, key) {
-    if (Operators.includes(key)) {
-      word = <span className="text-pink-400">{key}</span>;
-    } else if (KeyWord.includes(key)) {
-      word = <span className="text-pink-400">{key}</span>;
-    } else if (Adresses.includes(word)) {
-      word = <span className="text-purple-400">{word}</span>;
-    } else if (world.includes(word)) {
-      word = <span className="text-purple-400">{word}</span>;
-    } else if (numbers.includes(word)) {
-      word = <span className="text-purple-400">{word}</span>;
-    } else if (Bool.includes(word)) {
-      word = <span className="text-purple-400">{word}</span>;
-    } else if (!isNaN(word)) {
-      word = <span className="text-purple-400">{word}</span>;
+    if (!isNaN(key)) {
+      return <span className="text-purple-400">{key}</span>;
+    } else if (types.has(key)) {
+      const color = types.get(key);
+      return <span className={`text-${color}-400`}>{key}</span>;
     }
     return word;
   }
@@ -67,33 +55,38 @@ and printing the text in the description area */
     let row = text.split(/([\\\/;:'\"\t{}\[\]\(\).,\s])/g);
     let wordTracker = null;
     let words = row;
-    let savedWords = {};
 
     row.map((word, index) => {
       let currentWord = words[index];
-      let isSpace = currentWord == " " ? true : false;
 
-      if (!isSpace) {
-        if (currentWord in savedWords) {
+      if (currentWord != " ") {
+        if (savedWords.has(currentWord)) 
+        {
+          word = <span className={`text-${savedWords.get(currentWord)}-400`}>{currentWord}</span>;
+        } 
+        else if (wordTracker == "const" && currentWord != "const") 
+        {
           word = <span className="text-purple-400">{currentWord}</span>;
-        } else if (wordTracker == "const" && currentWord != "const") {
-          word = <span className="text-purple-400">{currentWord}</span>;
-          savedWords[currentWord] = word;
-        } else if (wordTracker !== null && currentWord == "(") {
+          saveWord(currentWord, "const");
+        } 
+        else if (wordTracker !== null && currentWord == "(") 
+        {
           row[index - 1] = (
-            <span className="text-green-400">{wordTracker}</span>
+            <span className={`text-green-400`}>{wordTracker}</span>
           );
         }
 
-        row[index] = setType(word, words[index]);
-        wordTracker = currentWord;
+        row[index] = setType(word, currentWord);
+        if (!Operators.includes(currentWord)) {
+          wordTracker = currentWord;
+        }
       }
     });
     return row;
   }
 
   return (
-    <div className="font-mono whitespace-pre-wrap text-white">
+    <div className="font-mono whitespace-pre-wrap text-white mb-[30px]">
       {lines.map(
         (line) =>
           (code && (
