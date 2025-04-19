@@ -56,7 +56,7 @@ export const ProjectOpen = ({ index, setOpenMore }) => {
             />
             <div>
               <h1 className="text-[1.6rem]">title {index + 1}</h1>
-              <TextArea text={description} mode={false} />
+              <TextArea text={description} code={false} />
             </div>
           </div>
           <div
